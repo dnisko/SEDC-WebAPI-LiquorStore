@@ -1,3 +1,5 @@
+using Workshop.E_Shop.Services.Helpers;
+
 namespace LiquorStore
 {
     public class Program
@@ -7,6 +9,10 @@ namespace LiquorStore
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString") ??
+                                   throw new InvalidOperationException(
+                                       "Connection string 'DefaultConnectionString' not found.");
+            builder.Services.RegisterDbContext(connectionString);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
