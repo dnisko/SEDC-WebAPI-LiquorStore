@@ -1,33 +1,52 @@
 ﻿using DataAccess.Interfaces;
 using DomainModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementations
 {
     public class Repository<T> : IRepository<T> where T : BaseClass
     {
+        private readonly LiquorStoreDbContext _context;
+        private DbSet<T> table = null;
+
+        public Repository(LiquorStoreDbContext context)
+        {
+            _context = context;
+            table = _context.Set<T>();
+        }
+
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return table;
         }
 
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return table.SingleOrDefault(x => x.Id == id);
         }
 
         public int Add(T entity)
         {
-            throw new NotImplementedException();
+            table.Add(entity);
+            return _context.SaveChanges();
         }
 
         public int Update(T entity)
         {
-            throw new NotImplementedException();
+            table.Update(entity);
+            return _context.SaveChanges();
         }
 
         public int Remove(int id)
         {
-            throw new NotImplementedException();
+            var item = table.SingleOrDefault(x=>x.Id == id);
+            if (item != null)
+            {
+                table.Remove(item);
+                return id;
+            }
+
+            return _context.SaveChanges();
         }
     }
 }

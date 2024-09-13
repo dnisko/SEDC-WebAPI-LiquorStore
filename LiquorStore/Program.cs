@@ -1,4 +1,9 @@
-using Workshop.E_Shop.Services.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Services.Helpers;
+using Services.Implementation;
+using Services.Interfaces;
 
 namespace LiquorStore
 {
@@ -19,6 +24,29 @@ namespace LiquorStore
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddTransient<IUserService, UserService>();
+
+            builder.Services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("secretKeyForAuthentication.DoNotFail"))
+                    };
+                });
+
+            builder.Services.RegisterRepositories(connectionString);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,6 +58,7 @@ namespace LiquorStore
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -10,7 +10,7 @@ namespace DataAccess
 
         }
 
-        public DbSet<Address> Address { get; set; }
+        public DbSet<UserInfo> UserInfo { get; set; }
         public DbSet<Beverage> Beverages { get; set; }
         public DbSet<Cart> Cart { get; set; }
         public DbSet<Order> Orders { get; set; }
