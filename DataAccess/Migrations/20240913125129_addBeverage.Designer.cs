@@ -4,6 +4,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(LiquorStoreDbContext))]
-    partial class LiquorStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240913125129_addBeverage")]
+    partial class addBeverage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,13 +80,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 1,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(458),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(6998),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Jameson Irish Whiskey, triple distilled for a smooth taste.",
                             ImageUrl = "https://example.com/images/jameson.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(495),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7028),
                             Name = "Jameson",
                             Price = 29.99m,
                             Quantity = 100,
@@ -94,13 +96,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 2,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(505),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7038),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Jack Daniel's Tennessee Whiskey, a classic American favorite.",
                             ImageUrl = "https://example.com/images/jackdaniels.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(507),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7039),
                             Name = "Jack Daniel's",
                             Price = 35.99m,
                             Quantity = 150,
@@ -110,13 +112,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 3,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(509),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7042),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Johnnie Walker Black Label, a refined blend of Scotch whisky.",
                             ImageUrl = "https://example.com/images/johnniewalker.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(511),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7043),
                             Name = "Johnnie Walker",
                             Price = 39.99m,
                             Quantity = 120,
@@ -126,13 +128,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 4,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(513),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7047),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Absolut Vodka, pure and smooth, perfect for cocktails.",
                             ImageUrl = "https://example.com/images/absolutvodka.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(514),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7049),
                             Name = "Absolut Vodka",
                             Price = 19.99m,
                             Quantity = 200,
@@ -142,13 +144,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 5,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(516),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7051),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Havana Club is a Cuban rum, known for its rich flavor and smooth finish.",
                             ImageUrl = "https://example.com/images/havana_club",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(517),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7052),
                             Name = "Havana Club",
                             Price = 25.99m,
                             Quantity = 80,
@@ -158,13 +160,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 6,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(523),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7057),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Classic Coca-Cola, the refreshing taste you love.",
                             ImageUrl = "https://example.com/images/cocacola.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(524),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7059),
                             Name = "Coca-Cola",
                             Price = 1.99m,
                             Quantity = 300,
@@ -174,13 +176,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 7,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(526),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7061),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Pepsi Cola, bold and refreshing with every sip.",
                             ImageUrl = "https://example.com/images/pepsi.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(528),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7062),
                             Name = "Pepsi",
                             Price = 1.89m,
                             Quantity = 280,
@@ -190,13 +192,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 8,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(529),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7064),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Sprite, lemon-lime soda with a crisp and clean taste.",
                             ImageUrl = "https://example.com/images/sprite.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(531),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7065),
                             Name = "Sprite",
                             Price = 1.79m,
                             Quantity = 270,
@@ -206,13 +208,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 9,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(533),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7067),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Fanta, fruity and fun with a burst of orange flavor.",
                             ImageUrl = "https://example.com/images/fanta.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(534),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7069),
                             Name = "Fanta",
                             Price = 1.69m,
                             Quantity = 260,
@@ -222,13 +224,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 10,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(537),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7071),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "7-Up, the refreshing lemon-lime soda everyone loves.",
                             ImageUrl = "https://example.com/images/7up.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(538),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7073),
                             Name = "7-Up",
                             Price = 1.59m,
                             Quantity = 250,
@@ -238,13 +240,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 11,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(540),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7075),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Heineken, a world-renowned Dutch lager.",
                             ImageUrl = "https://example.com/images/heineken.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(542),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7076),
                             Name = "Heineken",
                             Price = 3.99m,
                             Quantity = 220,
@@ -254,13 +256,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 12,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(544),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7078),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Budweiser, the King of Beers with a smooth and crisp finish.",
                             ImageUrl = "https://example.com/images/budweiser.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(545),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7079),
                             Name = "Budweiser",
                             Price = 2.99m,
                             Quantity = 210,
@@ -270,13 +272,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 13,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(547),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7081),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Corona Extra, perfect for those sunny beach days.",
                             ImageUrl = "https://example.com/images/corona.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(548),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7083),
                             Name = "Corona",
                             Price = 4.49m,
                             Quantity = 230,
@@ -286,13 +288,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 14,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(550),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7085),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Stella Artois, a Belgian pilsner of premium quality.",
                             ImageUrl = "https://example.com/images/stellaartois.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(552),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7086),
                             Name = "Stella Artois",
                             Price = 4.29m,
                             Quantity = 240,
@@ -302,13 +304,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 15,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(554),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7088),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Guinness, the iconic Irish stout with a rich and creamy flavor.",
                             ImageUrl = "https://example.com/images/guinness.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(555),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7089),
                             Name = "Guinness",
                             Price = 4.99m,
                             Quantity = 200,
@@ -318,13 +320,13 @@ namespace DataAccess.Migrations
                         {
                             Id = 16,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(557),
+                            CreatedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7091),
                             DeletedBy = 0,
                             DeletedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Carlsberg, probably the best beer in the world.",
                             ImageUrl = "https://example.com/images/carlsberg.jpg",
                             ModifiedBy = 1,
-                            ModifiedOn = new DateTime(2024, 9, 13, 14, 54, 30, 310, DateTimeKind.Local).AddTicks(558),
+                            ModifiedOn = new DateTime(2024, 9, 13, 14, 51, 28, 799, DateTimeKind.Local).AddTicks(7092),
                             Name = "Carlsberg",
                             Price = 4.99m,
                             Quantity = 200,
@@ -584,9 +586,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ModifiedBy")
                         .HasColumnType("int");

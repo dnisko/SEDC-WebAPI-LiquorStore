@@ -22,7 +22,7 @@ namespace Services.Helpers
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserInfoRepository, UserInfoRepository>();
-            //services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IBeverageRepository, BeverageRepository>();
             ////services.AddTransient<IRepository<Category>>(x => new CategoryAdoRepository(connectionString));
             //services.AddTransient<IRepository<Category>>(x => new CategoryDapperRepository(connectionString));
             

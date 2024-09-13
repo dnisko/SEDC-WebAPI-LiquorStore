@@ -1,8 +1,8 @@
 ﻿using DomainModels.Enums;
 
-namespace DomainModels
+namespace DTOs.Beverage
 {
-    public class Beverage : BaseClass
+    public class AddBeverageDto
     {
         public string Name { get; set; }
         public BeverageType Type { get; set; }

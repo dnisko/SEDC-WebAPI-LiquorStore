@@ -22,6 +22,7 @@ namespace Services.Implementation
             _userInfoRepository = userInfoRepository;
         }
 
+        /*
         public string LoginUser(string userName, string password)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
@@ -58,15 +59,107 @@ namespace Services.Implementation
                     new[]
                     {
                         new Claim(ClaimTypes.Name, loginUser.Username),
-                        new Claim("UserFullName", $"{user.FirstName} {user.LastName}")
+                        new Claim("User", $"{loginUser.Username}")
                     })
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-
+            //tokenHandler.WriteToken(token);
             return tokenHandler.WriteToken(token);
+            //return loginUser;
         }
+        */
+        /*
+        public string LoginUser(string userName, string password)
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                throw new Exception("Username and password must be provided!");
+            }
 
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+                string hashPassword = Convert.ToBase64String(hashBytes);
+
+                var loginUser = _userRepository.loginUser(userName, hashPassword);
+                if (loginUser == null)
+                {
+                    throw new Exception("User not found!");
+                }
+
+                var user = _userInfoRepository.GetById(loginUser.Id);
+                if (user == null)
+                {
+                    throw new Exception("User information not found!");
+                }
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var secretKeyBytes = Encoding.ASCII.GetBytes("secretKeyForAuthentication.DoNotFail");
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Expires = DateTime.UtcNow.AddHours(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256),
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, loginUser.Username),
+                        new Claim(ClaimTypes.NameIdentifier, loginUser.Id.ToString())
+                    })
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
+            }
+        }
+        */
+        public string LoginUser(string userName, string password)
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                throw new Exception("Username and password must be provided!");
+            }
+
+            using (var md5CryptoService = MD5.Create())
+            {
+                // Convert password to bytes and compute hash
+                byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
+
+                byte[] hashByte = md5CryptoService.ComputeHash(passwordBytes);
+
+                string hashPassword = Encoding.ASCII.GetString(hashByte);
+
+                // Validate user with hashed password
+                var loginUser = _userRepository.loginUser(userName, hashPassword);
+                if (loginUser == null)
+                {
+                    throw new Exception("User not found!");
+                }
+
+                var user = _userInfoRepository.GetById(loginUser.Id);
+                if (user == null)
+                {
+                    throw new Exception("User information not found!");
+                }
+
+                // Create JWT token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var secretKeyBytes = Encoding.ASCII.GetBytes("secretKeyForAuthentication.DoNotFail");
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Expires = DateTime.UtcNow.AddHours(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256),
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, loginUser.Username),
+                        new Claim(ClaimTypes.NameIdentifier, loginUser.Id.ToString())
+                    })
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
+            }
+        }
         public UserWithInfoDto RegisterUser(RegisterUserDto registerUser)
         {
             if (string.IsNullOrEmpty(registerUser.Username) &&

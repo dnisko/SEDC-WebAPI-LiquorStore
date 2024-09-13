@@ -18,5 +18,10 @@ namespace DataAccess
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Payment> Payment { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            PopulateDb.Seed(builder);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using DomainModels;
+using DTOs;
 using DTOs.User;
 
 namespace Services.Interfaces

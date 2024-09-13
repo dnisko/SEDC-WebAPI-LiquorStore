@@ -6,5 +6,6 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public bool ConfirmedEmail { get; set; } = false;
+        public bool IsAdmin { get; set; } = false;
     }
 }

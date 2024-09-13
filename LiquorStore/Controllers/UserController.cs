@@ -34,7 +34,7 @@ namespace LiquorStore.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-        }
+         }
 
         [HttpPost("login")]
         [AllowAnonymous]
@@ -42,8 +42,8 @@ namespace LiquorStore.Controllers
         {
             try
             {
-                string token = _userService.LoginUser(userDto.Username, userDto.Password);
-                return Ok(token);
+                var token = _userService.LoginUser(userDto.Username, userDto.Password);
+                return Ok(new { token });
             }
             catch (Exception e)
             {
