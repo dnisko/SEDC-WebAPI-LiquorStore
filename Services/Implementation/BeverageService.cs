@@ -25,8 +25,6 @@ namespace Services.Implementation
             {
                 throw new UnauthorizedAccessException("You do not have permission to add a beverage.");
             }
-
-            // If the user is an admin, proceed to add the beverage
             _beverageRepository.Add(beverage.ToModel());
             return beverage;
         }

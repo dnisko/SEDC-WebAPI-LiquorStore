@@ -122,14 +122,12 @@ namespace Services.Implementation
 
             using (var md5CryptoService = MD5.Create())
             {
-                // Convert password to bytes and compute hash
                 byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
 
                 byte[] hashByte = md5CryptoService.ComputeHash(passwordBytes);
 
                 string hashPassword = Encoding.ASCII.GetString(hashByte);
 
-                // Validate user with hashed password
                 var loginUser = _userRepository.loginUser(userName, hashPassword);
                 if (loginUser == null)
                 {
@@ -142,7 +140,6 @@ namespace Services.Implementation
                     throw new Exception("User information not found!");
                 }
 
-                // Create JWT token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var secretKeyBytes = Encoding.ASCII.GetBytes("secretKeyForAuthentication.DoNotFail");
                 var tokenDescriptor = new SecurityTokenDescriptor
