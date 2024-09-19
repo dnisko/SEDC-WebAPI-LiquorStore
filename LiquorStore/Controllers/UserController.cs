@@ -1,6 +1,8 @@
-﻿using DTOs.User;
+﻿using DomainModels;
+using DTOs.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Services.Interfaces;
 
 namespace LiquorStore.Controllers
@@ -38,16 +40,21 @@ namespace LiquorStore.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult LoginUser([FromBody] UserDto userDto)
+        public IActionResult LoginUser([FromBody] LoginDto loginDto)
         {
             try
             {
-                var token = _userService.LoginUser(userDto.Username, userDto.Password);
-                return Ok(new { token });
+                var result = _userService.LoginUser(loginDto);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return BadRequest("Something went wrong!");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                Log.Error(ex, $"Error while login user.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

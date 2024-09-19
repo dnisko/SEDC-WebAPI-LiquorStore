@@ -16,7 +16,7 @@ namespace Services.Helpers
             return services;
         }
 
-        public static IServiceCollection RegisterRepositories(this IServiceCollection services, string connectionString)
+        public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 

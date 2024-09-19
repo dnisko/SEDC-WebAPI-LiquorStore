@@ -6,8 +6,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DTOs;
+using AutoMapper;
 using DTOs.User;
+using Mappers;
+using Microsoft.Extensions.Options;
+using Services.Helpers;
 
 namespace Services.Implementation
 {
@@ -15,11 +18,18 @@ namespace Services.Implementation
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserInfoRepository _userInfoRepository;
+        private readonly IOptions<AppSettings> _appOptions;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IUserInfoRepository userInfoRepository)
+        public UserService(IUserRepository userRepository,
+            IUserInfoRepository userInfoRepository,
+            IOptions<AppSettings> appOptions,
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _userInfoRepository = userInfoRepository;
+            _appOptions = appOptions;
+            _mapper = mapper;
         }
 
         /*
@@ -113,50 +123,32 @@ namespace Services.Implementation
             }
         }
         */
-        public string LoginUser(string userName, string password)
+        public UserWithInfoDto LoginUser(LoginDto loginUser)
         {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(loginUser.Username) || string.IsNullOrEmpty(loginUser.Password))
             {
                 throw new Exception("Username and password must be provided!");
             }
 
-            using (var md5CryptoService = MD5.Create())
+            var hashedPassword = HashPassword(loginUser.Password);
+            var user = _userRepository.loginUser(loginUser.Username, hashedPassword);
+            if (user == null)
             {
-                byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
-
-                byte[] hashByte = md5CryptoService.ComputeHash(passwordBytes);
-
-                string hashPassword = Encoding.ASCII.GetString(hashByte);
-
-                var loginUser = _userRepository.loginUser(userName, hashPassword);
-                if (loginUser == null)
-                {
-                    throw new Exception("User not found!");
-                }
-
-                var user = _userInfoRepository.GetById(loginUser.Id);
-                if (user == null)
-                {
-                    throw new Exception("User information not found!");
-                }
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var secretKeyBytes = Encoding.ASCII.GetBytes("secretKeyForAuthentication.DoNotFail");
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Expires = DateTime.UtcNow.AddHours(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256),
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, loginUser.Username),
-                        new Claim(ClaimTypes.NameIdentifier, loginUser.Id.ToString())
-                    })
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                return tokenHandler.WriteToken(token);
+                throw new Exception("User not found!");
             }
+
+            var userInfo = _userInfoRepository.GetById(user.Id);
+            if (userInfo == null)
+            {
+                throw new Exception("User information not found!");
+            }
+
+            var userWithInfoDto = user.ToUserWithInfoDto(userInfo);
+            userWithInfoDto.Token = GenerateToken(user);
+
+            return userWithInfoDto;
         }
+
         public UserWithInfoDto RegisterUser(RegisterUserDto registerUser)
         {
             if (string.IsNullOrEmpty(registerUser.Username) &&
@@ -165,12 +157,10 @@ namespace Services.Implementation
                 throw new Exception("Username and password must be provided!");
             }
 
-            var md5CryptoService = MD5.Create();
-            byte[] passwordBytes = Encoding.ASCII.GetBytes(registerUser.Password);
-
-            byte[] hashByte = md5CryptoService.ComputeHash(passwordBytes);
-
-            string hashPassword = Encoding.ASCII.GetString(hashByte);
+            ValidateUser(registerUser);
+            var hashedPassword = HashPassword(registerUser.Password);
+            registerUser.Password = hashedPassword;
+            registerUser.ConfirmPassword = hashedPassword;
 
             User user = new User
             {
@@ -178,7 +168,7 @@ namespace Services.Implementation
                 //LastName = registerUser.LastName,
                 Username = registerUser.Username,
                 Email = registerUser.Email,
-                Password = hashPassword
+                Password = hashedPassword
             };
             _userRepository.Add(user);
 
@@ -204,6 +194,45 @@ namespace Services.Implementation
             };
 
             return returnUser;
+        }
+
+        private static void ValidateUser(RegisterUserDto user)
+        {
+            if (user.Password != user.ConfirmPassword)
+                throw new Exception("Password did not match.");
+        }
+
+        private static string HashPassword(string password)
+        {
+            MD5 md5CryptoServiceProvider = MD5.Create();
+            byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
+            byte[] hashBytes = md5CryptoServiceProvider.ComputeHash(passwordBytes);
+            string hashedPassword = Encoding.ASCII.GetString(hashBytes);
+
+            return hashedPassword;
+        }
+
+        private string GenerateToken(User user)
+        {
+            var userInfo = _userInfoRepository.GetById(user.Id);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] secretKeyBytes = Encoding.ASCII.GetBytes("this is my custom Secret key for authentication");
+
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Expires = DateTime.UtcNow.AddMinutes(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes),
+                    SecurityAlgorithms.HmacSha256Signature),
+                Subject = new ClaimsIdentity(
+                    new[]
+                    {
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim("userFullName", $"{userInfo.FirstName} {userInfo.LastName}")
+                    })
+            };
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }
