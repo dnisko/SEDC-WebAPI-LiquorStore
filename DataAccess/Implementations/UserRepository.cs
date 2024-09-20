@@ -11,10 +11,15 @@ namespace DataAccess.Implementations
             _context = context;
         }
 
-        public User loginUser(string username, string hashPassword)
+        public User LoginUser(string username, string hashPassword)
         {
             return _context.Users.SingleOrDefault(x => x.Username == username &&
                                                        x.Password == hashPassword);
+        }
+
+        public User GetByUsername(string username)
+        {
+            return _context.Users.SingleOrDefault(x => x.Username == username);
         }
     }
 }

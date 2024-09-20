@@ -9,5 +9,6 @@ namespace Services.Interfaces
         AddBeverageDto AddBeverage(AddBeverageDto beverage, int userId);
         int UpdateBeverage(AddBeverageDto beverage, int id);
         int DeleteBeverage(int id);
+        List<BeverageDto> GetBeveragesByType(int type);
     }
 }

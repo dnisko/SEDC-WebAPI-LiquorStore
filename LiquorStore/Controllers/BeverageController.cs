@@ -51,21 +51,21 @@ namespace LiquorStore.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("getById{id:int}")]
         public IActionResult GetById(int id)
         {
             try
             {
                 if (id <= 0)
                 {
-                    Log.Error($"Error occurred while fetching beverage with id: {id}.");
+                    Log.Error($"Error occurred while fetching beverage with type: {id}.");
                     return BadRequest("Id must have positive value!");
                 }
 
                 var beverage = _beverageService.GetBeverageById(id);
                 if (beverage == null)
                 {
-                    Log.Error($"Error occurred while fetching beverage with id: {id}.");
+                    Log.Error($"Error occurred while fetching beverage with type: {id}.");
                     throw new BeverageNotFoundException("Beverage not found!");
                 }
 
@@ -73,15 +73,48 @@ namespace LiquorStore.Controllers
             }
             catch (BeverageNotFoundException ex)
             {
-                Log.Error($"Error occurred while fetching beverage with id: {id}.", ex);
+                Log.Error($"Error occurred while fetching beverage with type: {id}.", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (Exception ex)
             {
-                Log.Error($"Error occurred while fetching beverage with id: {id}.", ex);
+                Log.Error($"Error occurred while fetching beverage with type: {id}.", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet("getByType{type:int}")]
+        public IActionResult GetByType(int type)
+        {
+            try
+            {
+                if (type <= 0)
+                {
+                    Log.Error($"Error occurred while fetching beverage with type: {type}.");
+                    return BadRequest("Type must have positive value!");
+                }
+
+                var beveragesByType = _beverageService.GetBeveragesByType(type);
+                if (beveragesByType == null)
+                {
+                    Log.Error($"Error occurred while fetching beverage with type: {type}.");
+                    throw new BeverageNotFoundException("Beverage not found!");
+                }
+
+                return Ok(beveragesByType);
+            }
+            catch (BeverageNotFoundException ex)
+            {
+                Log.Error($"Error occurred while fetching beverage with type: {type}.", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Error occurred while fetching beverage with type: {type}.", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost("addBeverage")]
         [Authorize]
         public IActionResult AddBeverage(AddBeverageDto beverageDto)

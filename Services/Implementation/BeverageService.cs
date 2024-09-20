@@ -67,5 +67,16 @@ namespace Services.Implementation
                 _beverageRepository.Remove(id);
             return 1;
         }
+
+        public List<BeverageDto> GetBeveragesByType(int type)
+        {
+            var beveragesByType = _beverageRepository.GetByType(type);
+            if (beveragesByType == null)
+            {
+                throw new Exception("Error while getting beverage type");
+            }
+
+            return beveragesByType.Select(x=>x.ToBeverageDto()).ToList();
+        }
     }
 }

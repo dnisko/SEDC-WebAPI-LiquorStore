@@ -17,6 +17,33 @@ namespace Mappers
                 ConfirmedEmail = userDto.ConfirmedEmail
             };
         }
+        public static UserInfo ToUserInfoModel(this UserWithInfoDto userDto, UserInfo userInfo)
+        {
+            userInfo.FirstName = userDto.FirstName;
+            userInfo.LastName = userDto.LastName;
+            userInfo.Street = userDto.Street;
+            userInfo.City = userDto.City;
+            userInfo.Country = userDto.Country;
+
+            return userInfo;
+        }
+        //public static UserWithInfoDto ToUserInfoDto(this User user, UserInfo userInfo)
+        //{
+        //    return new UserWithInfoDto
+        //    {
+        //        UserId = user.Id,
+        //        Username = user.Username,
+        //        Email = user.Email,
+        //        ConfirmedEmail = user.ConfirmedEmail,
+
+        //        FirstName = userInfo.FirstName,
+        //        LastName = userInfo.LastName,
+        //        Street = userInfo.Street,
+        //        City = userInfo.City,
+        //        Country = userInfo.Country
+        //    };
+        //}
+
         public static UserWithInfoDto ToUserWithInfoDto(this User user, UserInfo userInfo)
         {
             return new UserWithInfoDto
@@ -25,7 +52,6 @@ namespace Mappers
                 Username = user.Username,
                 Email = user.Email,
                 ConfirmedEmail = user.ConfirmedEmail,
-
                 FirstName = userInfo.FirstName,
                 LastName = userInfo.LastName,
                 Street = userInfo.Street,

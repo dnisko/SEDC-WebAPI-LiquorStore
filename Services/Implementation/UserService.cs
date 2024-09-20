@@ -131,7 +131,7 @@ namespace Services.Implementation
             }
 
             var hashedPassword = HashPassword(loginUser.Password);
-            var user = _userRepository.loginUser(loginUser.Username, hashedPassword);
+            var user = _userRepository.LoginUser(loginUser.Username, hashedPassword);
             if (user == null)
             {
                 throw new Exception("User not found!");
@@ -194,6 +194,42 @@ namespace Services.Implementation
             };
 
             return returnUser;
+        }
+
+        public UserWithInfoDto EditUser(UserWithInfoDto editUser, string username)
+        {
+            var user = _userRepository.GetByUsername(username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            var userInfo = _userInfoRepository.GetById(user.Id);
+
+
+            user.Username = editUser.Username;
+            user.Email = editUser.Email;
+            user.ConfirmedEmail = editUser.ConfirmedEmail;
+
+            userInfo.FirstName = editUser.FirstName;
+            userInfo.LastName = editUser.LastName;
+            userInfo.Street = editUser.Street;
+            userInfo.City = editUser.City;
+            userInfo.Country = editUser.Country;
+
+            _userRepository.Update(user);
+            _userInfoRepository.Update(userInfo);
+
+            return editUser;
+        }
+
+        public int MakeAdmin(string username)
+        {
+            var user = _userRepository.GetByUsername(username);
+            if (user == null)
+                throw new Exception("User not found");
+            user.IsAdmin = true;
+            _userRepository.Update(user);
+            return user.Id;
         }
 
         private static void ValidateUser(RegisterUserDto user)
