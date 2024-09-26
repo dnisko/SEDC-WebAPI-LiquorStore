@@ -85,13 +85,20 @@ namespace LiquorStore.Controllers
 
             //return Unauthorized("User is not logged in");
         }
-
+        [Authorize]
         [HttpPost("makeAdmin/{username}")]
-        [AllowAnonymous]
+        
         public IActionResult MakeAdmin(string username)
         {
             try
             {
+                var isAdminClaim = User.Claims.FirstOrDefault(x => x.Type == "IsAdmin")?.Value;
+
+                if (isAdminClaim == null || !bool.TryParse(isAdminClaim, out bool isAdmin) || !isAdmin)
+                {
+                    return Forbid("You do not have permission to make another user an admin.");
+                }
+
                 var result = _userService.MakeAdmin(username);
                 if (result != null)
                 {

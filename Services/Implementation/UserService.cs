@@ -256,14 +256,15 @@ namespace Services.Implementation
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes),
                     SecurityAlgorithms.HmacSha256Signature),
                 Subject = new ClaimsIdentity(
                     new[]
                     {
                         new Claim(ClaimTypes.Name, user.Username),
-                        new Claim("userFullName", $"{userInfo.FirstName} {userInfo.LastName}")
+                        new Claim("userFullName", $"{userInfo.FirstName} {userInfo.LastName}"),
+                        new Claim("IsAdmin", user.IsAdmin.ToString())
                     })
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);

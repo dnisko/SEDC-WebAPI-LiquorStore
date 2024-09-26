@@ -172,6 +172,21 @@ namespace DataAccess
                         ImageUrl = "https://example.com/images/carlsberg.jpg"
                     }
                 });
+
+            builder.Entity<User>()
+                .HasData(new List<User>
+                {
+                    new User
+                    {
+                        Id = 1,
+                        Username = "admin",
+                        Password =
+                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN0cmluZyIsInVzZXJGdWxsTmFtZSI6InN0cmluZyBzdHJpbmciLCJuYmYiOjE3MjczNzYzMzUsImV4cCI6MTcyNzM3NjM5NSwiaWF0IjoxNzI3Mzc2MzM1fQ.bszWb9m9m_2TCRYOz2oYFvK-HfMR34snNeD9-tHTeUU",
+                        Email = "admin@admin.com",
+                        ConfirmedEmail = true,
+                        IsAdmin = true
+                    }
+                });
         }
     }
 }
